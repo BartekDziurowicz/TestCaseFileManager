@@ -72,15 +72,6 @@ public class TopMenu extends JMenuBar{
 		        KeyEvent.VK_L, ActionEvent.ALT_MASK));
 		actions.add(deleteall);
 		
-		
-		//JMenu help = new JMenu("Help");
-		//add(help);
-		
-		//MenuItem helpitem = new MenuItem("Instruction", "help_icon_tp");
-		//helpitem.setAccelerator(KeyStroke.getKeyStroke(
-		//        KeyEvent.VK_H, ActionEvent.ALT_MASK));
-		//help.add(helpitem);
-		
 	}
 
 }

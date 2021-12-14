@@ -70,8 +70,12 @@ public class MenuItem extends JMenuItem {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Boolean emptyline = null;
-				JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+				Boolean emptyline = null;				
+				File output = new File(Paths.get("").toAbsolutePath().toString() + "/output");
+				if (!output.exists()) {
+					output.mkdirs();
+				}				
+				JFileChooser fc = new JFileChooser(Paths.get("").toAbsolutePath().toString() + "/output");
 				fc.setDialogTitle("Choose location.");
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("csv", "CSV");
 				fc.setFileFilter(filter);
@@ -332,21 +336,59 @@ public class MenuItem extends JMenuItem {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-				File output = new File(Paths.get("").toAbsolutePath().toString() + "/output");
-				if (!output.exists()) {
-					output.mkdirs();
-				}
+								
+				if(new File(Paths.get("").toAbsolutePath().toString() + "/output/" + JiraData.getProjectName() + ".csv").exists() && JiraData.isQuickSaveExist()==false) {
+					
+					int input = JOptionPane.showConfirmDialog(frame,
+							"The file already exists, do you want to overwrite it?", "TCFM",
+							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					switch (input) {
+					case 0:
+						frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+						
+						File output = new File(Paths.get("").toAbsolutePath().toString() + "/output");
+						if (!output.exists()) {
+							output.mkdirs();
+						}
+						
+						if (toCSV(datatable,
+								Paths.get("").toAbsolutePath().toString() + "/output/" + JiraData.getProjectName() + ".csv")) {
+							JiraData.setChanged(false);
+							frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+						} else {
+							frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+							JOptionPane.showMessageDialog(frame, "Failed to save the file.", "TCFM", JOptionPane.ERROR_MESSAGE);
+						}
+						
+						JiraData.setQuickSaveExist(true);
+						break;
 
-				if (toCSV(datatable,
-						Paths.get("").toAbsolutePath().toString() + "/output/" + JiraData.getProjectName() + ".csv")) {
-					JiraData.setChanged(false);
-					frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					case 1:
+						break;
+
+					default:
+						break;
+					}
 				} else {
-					frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-					JOptionPane.showMessageDialog(frame, "Failed to save the file.", "TCFM", JOptionPane.ERROR_MESSAGE);
+					frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+					
+					File output = new File(Paths.get("").toAbsolutePath().toString() + "/output");
+					if (!output.exists()) {
+						output.mkdirs();
+					}
+					
+					if (toCSV(datatable,
+							Paths.get("").toAbsolutePath().toString() + "/output/" + JiraData.getProjectName() + ".csv")) {
+						JiraData.setChanged(false);
+						frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					} else {
+						frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+						JOptionPane.showMessageDialog(frame, "Failed to save the file.", "TCFM", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					JiraData.setQuickSaveExist(true);
 				}
-
+				
 			}
 
 		};

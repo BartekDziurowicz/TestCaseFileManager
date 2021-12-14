@@ -16,6 +16,16 @@ public class JiraData {
 		changed = achanged;
 	}
 	
+	private static Boolean quicksaveexist = false;
+	
+	public static boolean isQuickSaveExist() {
+		return quicksaveexist;
+	}
+	
+	public static void setQuickSaveExist(boolean aquicksaveexist) {
+		quicksaveexist = aquicksaveexist;
+	}
+	
 	public static final int tableLimit = 1000;
 	
 	private static String projectName ="";

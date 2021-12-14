@@ -2,7 +2,7 @@ package tcfc.data;
 
 public class ProgramData {
 	
-	private static final String author = "Bartosz Dziurowicz", version = "v.1.0.5";
+	private static final String author = "Bartosz Dziurowicz", version = "v.1.0.6";
 	
 	public static String getAuthor() {
 		return author;

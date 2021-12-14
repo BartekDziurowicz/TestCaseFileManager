@@ -33,7 +33,6 @@ public class Frame extends JFrame implements WindowListener{
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(this);
-		
 	}
 
 	@Override

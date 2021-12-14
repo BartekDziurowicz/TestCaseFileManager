@@ -58,7 +58,8 @@ public class TextArea extends JTextArea{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JiraData.setProjectName(getText());
-				JiraData.setChanged(true);				
+				JiraData.setChanged(true);
+				JiraData.setQuickSaveExist(false);
 			}
 
 
